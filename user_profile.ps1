@@ -12,3 +12,5 @@ function Global:prompt{
     Write-Host ("[" + $curdir + "]") -ForegroundColor DarkYellow
     return "-> "
 }
+
+$Env:PSModulePath = $Env:PSModulePath+";D:\system\applications\cmder\config\PowerShell_Modules"
