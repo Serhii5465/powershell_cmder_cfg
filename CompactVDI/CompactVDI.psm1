@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 function CompactVDI {
     param(
-        [Parameter(Mandatory, HelpMessage="Enter one or more paths to virtual disk images separated by commas")]
+        [Parameter(Mandatory, HelpMessage="Enter the path to the virtual disk image")]
         [string]
         $VDI_file
     )
