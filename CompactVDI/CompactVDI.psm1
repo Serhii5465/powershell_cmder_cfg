@@ -17,8 +17,7 @@ function CompactVDI {
         Write-Error "VirtualBox is not installed"
     }
     
-    $Proc = Start-Process -PassThru -FilePath "${VBox_Path}\VBoxManage.exe" -ArgumentList "modifymedium --compact $VDI_file"
-    $handle = $proc.Handle
+    $Proc = Start-Process -NoNewWindow -PassThru -FilePath "${VBox_Path}\VBoxManage.exe" -ArgumentList "modifymedium --compact $VDI_file"
     $Proc.WaitForExit();
 }
 
