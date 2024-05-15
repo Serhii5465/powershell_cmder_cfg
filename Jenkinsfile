@@ -28,7 +28,7 @@ def DeployArtifacts(String label){
 
     bat returnStatus: true, script: """robocopy . ${path_ps_user_prof} ${file_prof}"""
 
-    if ("${label}" == "Win10_MSI"){
+    if ("${label}" == "Win10_MSI" || "${label}" == "Win10-Dell"){
         bat returnStatus: true, script: """robocopy /E . ${path_ps_modules} /XF ${file_prof} /XD ${zero_space_module}"""
     }
 
@@ -42,12 +42,12 @@ pipeline{
         label 'master'
     }
     
-     options { 
+    options { 
         skipDefaultCheckout() 
     }
 
     parameters {
-        choice choices: ['Win10_MSI', 'Win10-VB'], description: 'Choose an agent for deployment', name: 'AGENT'
+        choice choices: ['Win10_MSI', 'Win10-VB', 'Win10-Dell'], description: 'Choose an agent for deployment', name: 'AGENT'
         credentials credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey', 
                     defaultValue: '', 
                     name: 'GIT_REPO_CRED', 
