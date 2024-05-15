@@ -42,6 +42,10 @@ pipeline{
         label 'master'
     }
     
+     options { 
+        skipDefaultCheckout() 
+    }
+
     parameters {
         choice choices: ['Win10_MSI', 'Win10-VB'], description: 'Choose an agent for deployment', name: 'AGENT'
         credentials credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey', 
