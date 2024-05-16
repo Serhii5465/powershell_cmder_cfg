@@ -37,8 +37,9 @@ function DeployCygwin {
         Remove-Item -Force $File_Setup
 
         Write-Host "Succes.Exit with status code $($Proc.ExitCode)"
-
         
+        Write-Host "Installing additional Python packages in Cygwin"
+        (Start-Process -NoNewWindow -PassThru -FilePath $Root_Install'\bin\bash.exe' -ArgumentList "--login -c 'pip3 install cyg_mnt_point'").WaitForExit();
     } else {
         Write-Warning "Exit with status code $($Proc.ExitCode)"
     }
