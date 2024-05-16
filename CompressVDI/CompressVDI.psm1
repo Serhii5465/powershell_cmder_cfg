@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 function CompressVDI {
     param (
-        [Parameter(Mandatory, HelpMessage="Enter the paths to the virtual disk images")]
+        [Parameter(Mandatory, HelpMessage="Enter disk locations separated by commas")]
         [ValidateScript({
             foreach ($item in $_) {
                 if (-not (Test-Path $item)) {
@@ -27,10 +27,7 @@ function CompressVDI {
 
     foreach ($item in $VDI_Files) {
         Write-Host "Processing VDI: ${item}"
-        $Proc = Start-Process -NoNewWindow -PassThru -FilePath "${VBox_Path}\VBoxManage.exe" -ArgumentList "modifymedium --compact $item"
-        $Proc.WaitForExit();
+        (Start-Process -NoNewWindow -PassThru -FilePath "${VBox_Path}\VBoxManage.exe" -ArgumentList "modifymedium --compact $item").WaitForExit();
         Write-Host "`n"
     }
 }
-
-Export-ModuleMember -Function CompressVDI
