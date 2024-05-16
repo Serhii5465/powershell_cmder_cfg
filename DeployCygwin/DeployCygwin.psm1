@@ -3,9 +3,9 @@ Set-Location $PSScriptRoot
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SillyContinue'
 
-function RestoreCygwin {
+function DeployCygwin {
     $File_Setup = "setup.exe"
-    $File_Packages = "list_packages.dat"
+    $File_Packages = ".\res\list_pack.dat"
     $URI_Cygwin = "https://www.cygwin.com/setup-x86_64.exe"
     $Root_Install = "D:\system\applications\cygwin64"
 
@@ -33,13 +33,13 @@ function RestoreCygwin {
     if($Proc.ExitCode -eq 0){
         Write-Host "Removing temporary files"
 
-        Remove-Item -Recurse -Force 'https*'
+        Remove-Item -Recurse -Force -Path "\\?\$pwd\https*"
         Remove-Item -Force $File_Setup
 
         Write-Host "Succes.Exit with status code $($Proc.ExitCode)"
+
+        
     } else {
         Write-Warning "Exit with status code $($Proc.ExitCode)"
     }
 }
-
-Export-ModuleMember -Function RestoreCygwin
