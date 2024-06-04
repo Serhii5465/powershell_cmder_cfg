@@ -8,7 +8,7 @@ def DeployArtifacts(String label){
 
     def zero_space_module = "ZeroSpace"
     def comp_vdi_module = "CompressVDI"
-    def dep_cyg_module = "DeployCygwin"
+    def rest_cyg_module = "RestoreCygwin"
 
     bat returnStatus: true, script: """robocopy . ${path_ps_user_prof} ${file_prof}"""
 
@@ -17,7 +17,7 @@ def DeployArtifacts(String label){
     }
 
     if("${label}" == "Win10-VB"){
-        bat returnStatus: true, script: """robocopy /E . ${path_ps_modules} /XF ${file_prof} /XD ${comp_vdi_module} ${dep_cyg_module}"""
+        bat returnStatus: true, script: """robocopy /E . ${path_ps_modules} /XF ${file_prof} /XD ${comp_vdi_module} ${rest_cyg_module}"""
     }
 }
 
@@ -39,9 +39,14 @@ pipeline{
     }
 
     stages {
-        stage('Check status agent/git cred') {
-            steps {
+        stage('Ping agent'){
+            steps{
                 CheckAgent("${params.AGENT}")
+            }
+        }
+
+        stage('Check git cred') {
+            steps {
                 CheckGitCred("${params.GIT_REPO_CRED}")
             }
         }
