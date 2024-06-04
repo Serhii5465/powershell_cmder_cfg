@@ -7,7 +7,7 @@ The repository for settings and modules in PowerShell
 [CompressVDI](https://github.com/Serhii5465/powershell_cmder_cfg/blob/main/CompressVDI/CompressVDI.psm1) used for compressing VDI disks.
 
 
-[RestoreCygwin](https://github.com/Serhii5465/powershell_cmder_cfg/blob/main/RestoreCygwin/RestoreCygwin.psm1) - downloading Cygwin to a local directory. Script launch parameters:
+[DeployCygwin](https://github.com/Serhii5465/powershell_cmder_cfg/tree/main/DeployCygwin) - downloading Cygwin to a local directory. Script launch parameters:
 
 * cygwin mirror: https://sunsite.icm.edu.pl/pub/cygnus/cygwin/
 * arch: x86-64
