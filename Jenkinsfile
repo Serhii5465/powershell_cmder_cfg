@@ -32,10 +32,6 @@ pipeline{
 
     parameters {
         choice choices: ['Win10_MSI', 'Win10-VB', 'Win10-Dell'], description: 'Choose an agent for deployment', name: 'AGENT'
-        credentials credentialType: 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey', 
-                    defaultValue: '', 
-                    name: 'GIT_REPO_CRED', 
-                    required: true
     }
 
     stages {
@@ -45,18 +41,11 @@ pipeline{
             }
         }
 
-        stage('Check git cred') {
-            steps {
-                CheckGitCred("${params.GIT_REPO_CRED}")
-            }
-        }
-
         stage('Git checkout') {
             steps {
-                git branch: 'main', 
-                credentialsId: "${params.GIT_REPO_CRED}", 
-                poll: false, 
-                url: 'git@github.com:Serhii5465/powershell_cmder_cfg.git'
+                checkout scmGit(branches: [[name: 'main']],
+                extensions: [], 
+                userRemoteConfigs: [[url: 'powershell_cmder_cfg_repo:Serhii5465/powershell_cmder_cfg.git']])
 
                 stash excludes: 'README.md, Jenkinsfile', name: 'src'
             }
