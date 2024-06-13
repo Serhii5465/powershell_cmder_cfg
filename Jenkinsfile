@@ -1,68 +1,7 @@
-@Library('PrepEnvForBuild') _
+@Library(['PrepEnvForBuild', 'DeployWinAgents']) _
 
-def DeployArtifacts(String label){
-    def path_ps_user_prof = "D:\\system\\applications\\cmder\\config"
-    def path_ps_modules = "${path_ps_user_prof}\\PowerShell_Modules"
-
-    def file_prof = "user_profile.ps1"
-
-    def zero_space_module = "ZeroSpace"
-    def comp_vdi_module = "CompressVDI"
-    def rest_cyg_module = "RestoreCygwin"
-
-    bat returnStatus: true, script: """robocopy . ${path_ps_user_prof} ${file_prof}"""
-
-    if ("${label}" == "Win10_MSI" || "${label}" == "Win10-Dell"){
-        bat returnStatus: true, script: """robocopy /E . ${path_ps_modules} /XF ${file_prof} /XD ${zero_space_module}"""
-    }
-
-    if("${label}" == "Win10-VB"){
-        bat returnStatus: true, script: """robocopy /E . ${path_ps_modules} /XF ${file_prof} /XD ${comp_vdi_module} ${rest_cyg_module}"""
-    }
-}
-
-pipeline{
-    agent {
-        label 'master'
-    }
-    
-    options { 
-        skipDefaultCheckout() 
-    }
-
-    parameters {
-        choice choices: ['Win10_MSI', 'Win10-VB', 'Win10-Dell'], description: 'Choose an agent for deployment', name: 'AGENT'
-    }
-
-    stages {
-        stage('Ping agent'){
-            steps{
-                CheckAgent("${params.AGENT}")
-            }
-        }
-
-        stage('Git checkout') {
-            steps {
-                checkout scmGit(branches: [[name: 'main']],
-                extensions: [], 
-                userRemoteConfigs: [[url: 'powershell_cmder_cfg_repo:Serhii5465/powershell_cmder_cfg.git']])
-
-                stash excludes: 'README.md, Jenkinsfile', name: 'src'
-            }
-        }
-    
-        stage('Deploy'){
-            agent {
-                label "${params.AGENT}"
-            }
-
-            steps{
-                unstash 'src'
-                
-                script {
-                    DeployArtifacts("${params.AGENT}")
-                }
-            }
-        }
-    }
+node('master') {
+    def raw = libraryResource 'configs/powershell_cmder_cfg_repo.json'
+    def config = readJSON text: raw
+    DeployArtifactsPipelineWinAgents(config)
 }
