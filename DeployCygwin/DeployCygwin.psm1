@@ -38,8 +38,10 @@ function DeployCygwin {
 
         Write-Host "Succes.Exit with status code $($Proc.ExitCode)"
         
+        Set-Content -Path $Root_Install'\etc\fstab' -Value "none /cygdrive cygdrive binary,noacl,posix=0,user 0 0"
+
         Write-Host "Installing additional Python packages in Cygwin"
-        (Start-Process -NoNewWindow -PassThru -FilePath $Root_Install'\bin\bash.exe' -ArgumentList "--login -c 'pip3 install cyg_mnt_point'").WaitForExit();
+        (Start-Process -NoNewWindow -PassThru -FilePath $Root_Install'\bin\bash.exe' -ArgumentList "--login -c 'pip3 install cyg_mnt_point BetterADBSync'").WaitForExit();
     } else {
         Write-Warning "Exit with status code $($Proc.ExitCode)"
     }
