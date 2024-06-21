@@ -11,7 +11,7 @@ The repository for settings and modules in PowerShell
 
 * cygwin mirror: https://sunsite.icm.edu.pl/pub/cygnus/cygwin/
 * arch: x86-64
-* packages: [link](https://github.com/Serhii5465/powershell_cmder_cfg/blob/main/RestoreCygwin/list_packages.dat)
+* packages: [link](https://github.com/Serhii5465/powershell_cmder_cfg/blob/main/DeployCygwin/res/list_pack.dat)
 * --no-startmenu
 * --no-desktop
 * --quiet-mode
