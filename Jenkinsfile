@@ -21,8 +21,9 @@ def DeployModules = { String label ->
 
 node('master') {
     def config = [
-        git_repo_url : "powershell_cmder_cfg_repo:Serhii5465/powershell_cmder_cfg.git",
+        git_repo_url : "git@github.com:Serhii5465/powershell_cmder_cfg.git",
         git_branch : "main",
+        git_cred_id : "powershell_cmder_cfg_repo_cred",
         stash_includes : "",
         stash_excludes : "README.md, Jenkinsfile",
         command_deploy : "robocopy /E . D:\\system\\scripts\\sync_data",
