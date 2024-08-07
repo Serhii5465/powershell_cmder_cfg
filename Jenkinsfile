@@ -21,6 +21,7 @@ def DeployModules = { String label ->
 
 node('master') {
     def config = [
+        platform: "win32",
         git_repo_url : "git@github.com:Serhii5465/powershell_cmder_cfg.git",
         git_branch : "main",
         git_cred_id : "powershell_cmder_cfg_repo_cred",
@@ -30,5 +31,5 @@ node('master') {
         func_deploy : DeployModules
     ]
 
-    DeployArtifactsPipelineWinAgents(config)
+    DeployArtifactsPipelineOnAgents(config)
 }
