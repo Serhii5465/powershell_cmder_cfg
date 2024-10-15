@@ -14,3 +14,9 @@ function Global:prompt{
 }
 
 $Env:PSModulePath = $Env:PSModulePath+";D:\system\applications\cmder\config\PowerShell_Modules"
+
+function Cleanup-WinSxS {
+    Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+}
+
+Set-Alias cw Cleanup-WinSxS
