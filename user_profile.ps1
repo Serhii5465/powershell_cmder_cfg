@@ -21,3 +21,4 @@ function Cleanup-WinSxS {
 
 Set-Alias cw Cleanup-WinSxS
 Set-Alias comvdi CompressVDI
+Set-Alias zero ZeroSpace
